@@ -239,8 +239,6 @@ int main()
                             break;
 
                         case 3: // this should be the first task to be done becuse if class is not created then student cant enter his details.
-                            int seat[10] ;
-                           
                             printf("enter the number of rows in the class: ");
                             scanf("%d" , &rows); 
 
