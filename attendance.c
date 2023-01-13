@@ -5,7 +5,7 @@
 
     Project name : attendance
 
-    Description: This program helps the teacher to take the attendance very easily just he/she has 
+    Description: This program helps the teacher to take the attendance very easily just he/she has
     to put the absentees seat number to make the student absent.
 */
 
