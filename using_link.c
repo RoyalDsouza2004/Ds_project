@@ -52,8 +52,9 @@ void details_of_student(student *s)
     printf("Number of days absent: %d\n\n" , s -> absent);
 }
 
-bool traverse(int s , student *temp1)
+bool traverse(int s)
 {  
+    student *temp1;
     temp1 = class;
     while(temp1!= NULL)
     {
@@ -102,7 +103,7 @@ void main()
                            
                         case 2: 
                             int n = 1 ;
-                            student *n ;
+                            student *new ;
                             printf("\n");
                             for(int i=0 ; i< (rows * seats) ; i++)
                                 printf("*");
@@ -121,9 +122,16 @@ void main()
 
                             printf("\nselect student's seat:");
                             scanf("%d" , &seat_num);
-                            traverse(seat_num , n);
-                            details_of_student(n);
 
+                            new = class ;
+                            while(new!= NULL)
+                            {
+                                if(seat_num == new -> seat_number)
+                                    break;
+                                new = new->point;
+                            }
+
+                            details_of_student(new);
                             break;
             
                         case 3:     
@@ -156,7 +164,7 @@ void main()
                     switch (ch2)
                     {
                         case 1:
-                        student *newnode , *temp2;
+                        student *newnode;
                         int n = 1 ;
                         char name[20] ,roll_number[10];
                         long long phone_number;
@@ -185,7 +193,7 @@ void main()
                             printf("you have chosen wrong seat number! try again.");
                             goto retry;
                         }
-                        else if(traverse(seat_num , temp2) == true)
+                        else if(traverse(seat_num) == true)
                         {
                             printf("seat is already booked try again.");
                             goto retry;
