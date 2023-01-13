@@ -75,10 +75,10 @@ void get_from_txtfile()
             class[records].book_seat = false ;
         else 
             class[records].book_seat = true ;
-        if(read == 7)
+        if(read == 8)
             records++;
 
-        if(read != 7 && !feof(data))
+        if(read != 8 && !feof(data))
         {
             printf("not success.\n");
             exit(1);
