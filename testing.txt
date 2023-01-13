@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
+int rows=1 , seats=8 ;
+float days = 0.0 ;
+
+//creating a structure for storing student details.
+struct student
+{
+    char std_name[20];
+    char Usn[10];
+    long long phone;
+    int present ;
+    int absent;
+    int seat_number;
+    char day[50];
+    struct student *point;
+};
+
+struct student *class = NULL , *temp;
+
+void seat_register(struct student *st, char name[20], char usn[10], long long phone , int se , char d[50])
+{
+    strcpy(st -> std_name , name);
+    strcpy(st -> Usn , usn);
+    st -> phone = phone ;
+    st -> present = 0;
+    st -> absent = 0;
+    st -> seat_number = se ;
+    strcpy(st -> day , d);
+    if(class == NULL)
+        temp = class = st ;
+    else 
+    {
+        temp -> point = st;
+        temp = st ;
+    }
+}
+
+void details_of_student(struct student *s)
+{
+    printf("\nStudent details are : \n");
+    printf("Name : %s\n" , s -> std_name); 
+    printf("USN: %s\n" , s -> Usn);
+    printf("Phone number: %lld\n" , s -> phone);
+    printf("Number of days present: %d\n" , s -> present);
+    if(days == 0)
+        printf("percentage: 0 ( because no class is taken)\n");
+    else
+        printf("Percentage: %g\n" , ((s -> present) / days) * 100 );
+    printf("Number of days absent: %d\n\n" , s -> absent);
+}
+
+bool traverse(int s , struct student *temp1)
+{  
+    temp1 = class;
+    while(temp1!= NULL)
+    {
+        if(s == temp1 -> seat_number)
+        { 
+            return true;
+        }
+        else 
+            temp1 = temp1 -> point ;
+    }
+    return false;
+}
+
+int node_calculate()
+{
+    int count = 0;
+    struct student *temp1;
+    temp1 = class;
+    while(temp1 != NULL)
+    {
+        count++;
+        temp1 = temp1 -> point ;  
+    }
+    return count;
+}
+
+void main()
+{
+    struct student *newnode , *n;
+    newnode = (struct student*) malloc(sizeof(struct student));
+    seat_register(newnode , "roy" , "cs122" , 73483743, 1 , "N");
+    newnode = (struct student*) malloc(sizeof(struct student));
+    seat_register(newnode , "roysfs" , "cs1sfs22" , 73833743, 5 , "N");
+    newnode = (struct student*) malloc(sizeof(struct student));
+    seat_register(newnode , "rohabny" , "css122" , 734837343, 12 , "N");
+    n = class ;
+    while(n!= NULL)
+    {
+      if(5 == n -> seat_number)
+      {
+        break;
+      }
+      n = n->point;
+    }
+    details_of_student(n);
+
+}
