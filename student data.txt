@@ -1,4 +1,4 @@
-rohan,cs121,2112121,0,0,1,D,1
+rohan,cs121,2112121,1,0,1,D,1
 no name,mite,0,0,0,2,D,0
 no name,mite,0,0,0,3,D,0
 no name,mite,0,0,0,4,D,0
