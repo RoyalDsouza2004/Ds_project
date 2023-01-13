@@ -1,19 +1,8 @@
-/*
-    Team members:
-        Royal dsouza
-        Poornesh Nayak
-
-    Project name : attendance
-
-    Description: This program helps the teacher to take the attendance very easily just he/she has
-    to put the absentees seat number to make the student absent.
-*/
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-int rows=0 , seats=0 , n=1 ;
+int rows=0 , seats=0 , node=1 ;
 float days = 0.0 ;
 
 //creating a structure for storing student details.
@@ -31,167 +20,6 @@ typedef struct student_details
 
 student *class;
 
-void store_to_txtfile(int row , int column , FILE *fl)
-{
-
-    fprintf(fl , "%d,%d,%g\n" , rows , seats , days );
-    
-    fclose(fl);
-
-    fl = fopen("student data.txt" , "w");
-
-    for(int i=0 ; i<(row * column) ; i++)
-    { 
-        fprintf(fl , "%s,%s,%lld,%d,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].seat_number , class[i].day , class[i].book_seat);
-    }
-
-    fclose(fl);
-}
-
-void get_from_txtfile()
-{
-    
-    FILE *data;
-
-    data = fopen("class.txt" , "r");
-
-    if(data == NULL || !data)
-    return;
-
-    fscanf(data , "%d,%d,%g\n" , &rows , &seats , &days);
-
-    fclose(data);
-
-    class = (student*) malloc(rows * seats * sizeof(student));
-
-    data = fopen("student data.txt" , "r");
-
-    int bol ;
-    int records = 0 , read = 0;
-    do
-    {
-        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , &class[records].seat_number , class[records].day , &bol );
-        if(bol == 0)
-            class[records].book_seat = false ;
-        else 
-            class[records].book_seat = true ;
-        if(read == 8)
-            records++;
-
-        if(read != 8 && !feof(data))
-        {
-            printf("not success.\n");
-            exit(1);
-        }
-        if(ferror(data))
-        {
-            printf("not success.\n");
-            exit(1);
-        }
-    }while (!feof(data));
-
-    fclose(data);
-}
-
-//creating a class structure.
-void create(int rows , int column)
-{
-    class = (student*) malloc(rows * column * sizeof(student)); // dynamically allocating array of structures.
-    for(int i=0 ; i<(rows* column) ; i++)
-    {
-        strcpy(class[i].std_name , "no name");
-        strcpy(class[i].Usn , "mite");
-        class[i].phone = 0;
-        class[i].present = 0;
-        class[i].absent = 0;
-        class[i].seat_number = n++;
-        class[i].book_seat = false ;
-        strcpy(class[i].day , "D");
-    }
-}
-
-// taking the attendance.
-void attendance(student *s)
-{
-    ++days;
-    int ab ;
-    printf("Enter the number of students absent for the class: ");
-    scanf("%d" , &ab);
-
-    int  seat_num[ab];
-
-    printf("\n*********************************************************\n");
-    for(int i=0 ; i<rows ; i++)
-    {
-        for(int j=0 ; j< seats ; j++) 
-        {
-            printf("%d\t", s[i*seats + j].seat_number);
-        }
-        printf("\n\n");
-    }
-    printf("**************************************************************\n");
-
-    printf("Enter the absentees seat numbers in order: (i.e increasing order like 1 2 3 etc...)");
-    for(int i=0 ; i<ab ; i++)
-    {
-        printf("\nStudent %d: " , i + 1);
-        scanf("%d" , &seat_num[i]);
-    }
-    int j = 0 , in = 0;
-
-    while(in <=(rows*seats))
-    {
-        if(class[in-1].book_seat == false)
-            in++;
-        else
-        {
-            if(in == seat_num[j])
-            {
-                s[in-1].absent++; //this line will make student absent 
-                strcat(s[in-1].day , "A");
-                j++;
-            }
-            else 
-            {
-                s[in-1].present++; //this line will make student present
-                strcat(s[in-1].day , "P");
-            }  
-            in++;  
-        }
-    }
-}
-
-
-// student details will be displayed here.
-void display_std_details(student *s)
-{
-    printf("\nStudent details are : \n");
-
-    printf("Name : %s\n" , s -> std_name); 
-
-    printf("USN: %s\n" , s -> Usn);
-
-    printf("Phone number: %lld\n" , s -> phone);
-
-    printf("Number of days present: %d\n" , s -> present);
-
-    if(days == 0)
-        printf("percentage: 0 ( because no class is taken)\n");
-    else
-        printf("Percentage: %g\n" , ((s -> present) / days) * 100 );
-
-    printf("Number of days absent: %d\n\n" , s -> absent);
-
-}
-
-// giving student to choose his / her seat
-void seat_register(student *st, char name[20], char usn[10], long long phone )
-{
-    strcpy(st -> std_name , name);
-    strcpy(st -> Usn , usn);
-    st -> phone = phone ;
-    st -> book_seat = true; 
-}
 
 int main()
 {
@@ -222,12 +50,13 @@ int main()
                             break;
 
                         case 2: // teacher can check the individual student information.
+                            int n = 1;
                             printf("\n*********************************************************\n");
                             for(int i=0 ; i<rows ; i++)
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t" , n++);
                                 }
                                 printf("\n\n");
                             }
@@ -239,15 +68,11 @@ int main()
                             break;
 
                         case 3: // this should be the first task to be done becuse if class is not created then student cant enter his details.
-                            int seat[10] ;
-                           
                             printf("enter the number of rows in the class: ");
                             scanf("%d" , &rows); 
 
                             printf("enter number of seats in each row: " );
                             scanf("%d" , &seats);
-
-                            create(rows , seats);
                             break;
 
                         case 4:
@@ -282,12 +107,13 @@ int main()
                         case 1: // student can register his seat from here.
                             char name[20] ,roll_number[10];
                             long long phone_number;
+                            int n=1;
                             printf("\n**********************seats available***********************\n");
                             for(int i=0 ; i<rows ; i++)
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t", n++);
                                 }
                                 printf("\n\n");
                             }
@@ -319,12 +145,13 @@ int main()
                             break;
 
                         case 2: // student can check his details.
+                            int n = 1;
                             printf("\n*********************************************************\n");
                             for(int i=0 ; i<rows ; i++)
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t" , n++);
                                 }
                                 printf("\n\n");
                             }
