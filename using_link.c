@@ -14,13 +14,13 @@ typedef struct student_details
     int present ;
     int absent;
     int seat_number;
-    char day[60];
+    char day[50];
     student *point;
 }student;
 
 student *class = NULL , *temp;
 
-void seat_register(student *st, char name[20], char usn[10], long long phone , int se)
+void seat_register(student *st, char name[20], char usn[10], long long phone , int se , char d[50])
 {
     strcpy(st -> std_name , name);
     strcpy(st -> Usn , usn);
@@ -28,7 +28,7 @@ void seat_register(student *st, char name[20], char usn[10], long long phone , i
     st -> present = 0;
     st -> absent = 0;
     st -> seat_number = se ;
-    strcpy(st -> day , "d");
+    strcpy(st -> day , d);
     if(class == NULL)
         temp = class = st ;
     else 
@@ -47,19 +47,33 @@ bool traverse(int s)
         if(s == temp1 -> seat_number)
             return true;
         else 
-            temp = temp -> point ;
+            temp1 = temp1 -> point ;
     }
     return false;
+}
+
+int node_calculate()
+{
+    int count = 0;
+    student *temp1;
+    temp1 = class;
+    while(temp1 != NULL)
+    {
+        count++;
+        temp1 = temp1 -> point ;  
+    }
+    return count;
 }
 
 void main()
 {
     int choice ;
+
+    main:
     printf("1:Administrator.\n2:student.\n3:exit.\nEnter the choice: "); // main menu
     scanf("%d", &choice);
     do
     {
-
         switch(choice)
         {
             case 1:
@@ -78,17 +92,14 @@ void main()
                         case 3:     
                             printf("enter the number of rows in the class: ");
                             scanf("%d" , &rows); 
-
                             printf("enter number of seats in each row: " );
                             scanf("%d" , &seats);
-
-                            create(rows , seats);
                             break;
                            
                         case 4:
                     
                         case 5:
-                
+                            goto main;
 
                         case 6:
 
@@ -134,13 +145,13 @@ void main()
                         else
                         {
                             newnode = (student*) malloc(sizeof(student));
-                            seat_register(newnode , name , roll_number , phone_number , seat_num);
+                            seat_register(newnode , name , roll_number , phone_number , seat_num , "N");
                         }    
                         
                         case 2:
 
                         case 3:
-                            
+                            goto main;
 
                         case 4:
                         
