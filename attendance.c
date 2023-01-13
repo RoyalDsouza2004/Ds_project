@@ -26,6 +26,7 @@ typedef struct student_details
     int absent;
     int seat_number;
     bool book_seat ;
+    char day[60];
 }student;
 
 student *class;
@@ -33,20 +34,18 @@ student *class;
 void store_to_txtfile(int row , int column , FILE *fl)
 {
 
-    fprintf(fl , "%d,%d,%g\n" , rows , seats , days  );
+    fprintf(fl , "%d,%d,%g\n" , rows , seats , days );
     
     fclose(fl);
 
-    FILE *file ;
-
-    file = fopen("student data.txt" , "w");
+    fl = fopen("student data.txt" , "w");
 
     for(int i=0 ; i<(row * column) ; i++)
     { 
         fprintf(fl , "%s,%s,%lld,%d,%d,%d,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].seat_number , class[i].book_seat );
     }
 
-    fclose(file);
+    fclose(fl);
 }
 
 void get_from_txtfile()
@@ -141,14 +140,20 @@ void attendance(student *s)
 
     for(int i=1 ; i<=n ; i++)
     {
-        if(i == seat_num[j])
+        while(s[i].book_seat)
         {
-            s[i-1].absent++; //this line will make student absent 
-            j++;
+            if(i == seat_num[j])
+            {
+                s[i-1].absent++; //this line will make student absent 
+                j++;
+                strcat(s[i-1].day , "A");
+            }
+            else
+            {
+                s[i-1].present++; //this line will make student present
+                strcat(s[i-1].day , "P");
+            }    
         }
-    
-        else
-            s[i-1].present++; //this line will make student present 
     }
 }
 
