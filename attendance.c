@@ -141,20 +141,17 @@ void attendance(student *s)
 
     for(int i=1 ; i<=n ; i++)
     {
-        while(s[i].book_seat)
+        if(i == seat_num[j] && class[i].book_seat == true)
         {
-            if(i == seat_num[j])
-            {
-                s[i-1].absent++; //this line will make student absent 
-                j++;
-                strcat(s[i-1].day , "A");
-            }
-            else
-            {
-                s[i-1].present++; //this line will make student present
-                strcat(s[i-1].day , "P");
-            }    
+            s[i-1].absent++; //this line will make student absent 
+            j++;
+            strcat(s[i-1].day , "A");
         }
+        else if(class[i].book_seat == true)
+        {
+            s[i-1].present++; //this line will make student present
+            strcat(s[i-1].day , "P");
+        }    
     }
 }
 
