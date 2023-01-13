@@ -14,16 +14,47 @@ typedef struct student_details
     int present ;
     int absent;
     int seat_number;
-    bool book_seat ;
     char day[60];
+    student *point;
 }student;
 
-student *class;
+student *class = NULL , *temp;
+
+void seat_register(student *st, char name[20], char usn[10], long long phone , int se)
+{
+    strcpy(st -> std_name , name);
+    strcpy(st -> Usn , usn);
+    st -> phone = phone ;
+    st -> present = 0;
+    st -> absent = 0;
+    st -> seat_number = se ;
+    strcpy(st -> day , "d");
+    if(class == NULL)
+        temp = class = st ;
+    else 
+    {
+        temp -> point = st;
+        temp = st ;
+    }
+}
+
+bool traverse(int s)
+{  
+    student *temp1;
+    temp1 = class;
+    while(temp1!= NULL)
+    {
+        if(s == temp1 -> seat_number)
+            return true;
+        else 
+            temp = temp -> point ;
+    }
+    return false;
+}
 
 void main()
 {
     int choice ;
-
     printf("1:Administrator.\n2:student.\n3:exit.\nEnter the choice: "); // main menu
     scanf("%d", &choice);
     do
@@ -44,7 +75,15 @@ void main()
                            
                         case 2: 
             
-                        case 3: 
+                        case 3:     
+                            printf("enter the number of rows in the class: ");
+                            scanf("%d" , &rows); 
+
+                            printf("enter number of seats in each row: " );
+                            scanf("%d" , &seats);
+
+                            create(rows , seats);
+                            break;
                            
                         case 4:
                     
@@ -69,8 +108,35 @@ void main()
                     switch (ch2)
                     {
                         case 1:
-                           
-
+                        student *newnode;
+                        int n = 1 , seat_num;
+                        char name[20] ,roll_number[10];
+                        long long phone_number;
+                        printf("\n*********************************************************\n");
+                        for(int i=0 ; i<rows ; i++)
+                        {
+                            for(int j=0 ; j< seats ; j++) 
+                            {
+                                printf("%d\t" , n++);
+                            }
+                            printf("\n\n");
+                        }
+                        printf("**************************************************************\n");
+                        retry:
+                        printf("choose your seat: ");
+                        scanf("%d", &seat_num);
+                        bool res = traverse(seat_num);
+                        if(res == true)
+                        {
+                            printf("seat is already booked try again.");
+                            goto retry;
+                        } 
+                        else
+                        {
+                            newnode = (student*) malloc(sizeof(student));
+                            seat_register(newnode , name , roll_number , phone_number , seat_num);
+                        }    
+                        
                         case 2:
 
                         case 3:
