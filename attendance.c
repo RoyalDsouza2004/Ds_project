@@ -42,7 +42,7 @@ void store_to_txtfile(int row , int column , FILE *fl)
 
     for(int i=0 ; i<(row * column) ; i++)
     { 
-        fprintf(fl , "%s,%s,%lld,%d,%d,%d,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].seat_number , class[i].book_seat );
+        fprintf(fl , "%s,%s,%lld,%d,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].seat_number , class[i].day , class[i].book_seat);
     }
 
     fclose(fl);
@@ -70,7 +70,7 @@ void get_from_txtfile()
     int records = 0 , read = 0;
     do
     {
-        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%d,%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , &class[records].seat_number , &bol );
+        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , &class[records].seat_number , class[records].day , &bol );
         if(bol == 0)
             class[records].book_seat = false ;
         else 
