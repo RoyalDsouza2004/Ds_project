@@ -106,6 +106,7 @@ void create(int rows , int column)
         class[i].absent = 0;
         class[i].seat_number = n++;
         class[i].book_seat = false ;
+        strcpy(class[i].day , "D");
     }
 }
 
@@ -263,7 +264,6 @@ int main()
                         default:
                             printf("Give the proper choice please!\n");
                     }
-
                 }
                 break; 
 
