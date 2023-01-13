@@ -137,22 +137,26 @@ void attendance(student *s)
         printf("\nStudent %d: " , i + 1);
         scanf("%d" , &seat_num[i]);
     }
-    int j = 0;
+    int j = 0 , in = 0;
 
-    for(int i=1 ; i<=n ; i++)
+    while(in <=(rows*seats))
     {
-        if(class[i-1].book_seat == true)
+        if(class[in-1].book_seat == false)
+            in++;
+        else
         {
-            if(i == seat_num[j++])
+            if(in == seat_num[j])
             {
-                s[i-1].absent++; //this line will make student absent 
-                strcat(s[i-1].day , "A");
+                s[in-1].absent++; //this line will make student absent 
+                strcat(s[in-1].day , "A");
+                j++;
             }
             else 
             {
-                s[i-1].present++; //this line will make student present
-                strcat(s[i-1].day , "P");
-            }    
+                s[in-1].present++; //this line will make student present
+                strcat(s[in-1].day , "P");
+            }  
+            in++;  
         }
     }
 }
