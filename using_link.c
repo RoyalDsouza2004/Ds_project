@@ -128,7 +128,7 @@ void main()
                             {
                                 if(seat_num == new -> seat_number)
                                     break;
-                                new = new->point;
+                                new = new -> point;
                             }
 
                             details_of_student(new);
