@@ -56,6 +56,40 @@ void details_of_student(struct student *s)
     printf("Number of days absent: %d\n\n" , s -> absent);
 }
 
+void absent(int ab)
+{
+    struct student *temp1;
+    temp1 = class;
+    while(temp1!=NULL)
+    {
+        if(ab == temp1 -> seat_number)
+        {
+            temp1 -> absent++;
+            strcat(temp1 -> day , "A");
+            temp1 -> indecator = true;
+            break;
+        }
+        temp1 = temp1 -> point;
+    }
+}
+
+void present(int ab)
+{
+    struct student *temp1;
+    temp1 = class;
+    while(temp1!=NULL)
+    {
+        if(ab == temp1 -> seat_number)
+        {
+            temp1 -> present++;
+            strcat(temp1 -> day , "P");
+            temp1 -> indecator = true;
+            break;
+        }
+        temp1 = temp1 -> point;
+    }
+}
+
 bool traverse(int s)
 {  
   struct student *temp1;
@@ -110,4 +144,24 @@ void main()
     }
     details_of_student(n);
 
+    ++days;
+    struct student *s;
+
+    if(traverse(1))
+        absent(1); 
+    if(traverse(4))
+        absent(4); 
+    if(traverse(12))
+        absent(1); 
+
+    struct student *newnode;
+    newnode = class;
+    while (newnode!=NULL)
+    {
+        if(newnode -> indecator == false)
+        {
+            newnode -> present++;
+            newnode = newnode -> point;
+        }
+    }   
 }
