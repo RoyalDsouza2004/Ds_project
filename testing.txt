@@ -14,13 +14,13 @@ struct student
     int present ;
     int absent;
     int seat_number;
-    char day[50];
+    char day[10];
     struct student *point;
 };
 
 struct student *class = NULL , *temp;
 
-void seat_register(struct student *st, char name[20], char usn[10], long long phone , int se , char d[50])
+void seat_register(struct student *st, char name[20], char usn[10], long long phone , int se , char d[1])
 {
     strcpy(st -> std_name , name);
     strcpy(st -> Usn , usn);
@@ -30,10 +30,14 @@ void seat_register(struct student *st, char name[20], char usn[10], long long ph
     st -> seat_number = se ;
     strcpy(st -> day , d);
     if(class == NULL)
+    {
         temp = class = st ;
+        st -> point = NULL;
+    }
     else 
     {
         temp -> point = st;
+        st -> point = NULL;
         temp = st ;
     }
 }
@@ -52,8 +56,9 @@ void details_of_student(struct student *s)
     printf("Number of days absent: %d\n\n" , s -> absent);
 }
 
-bool traverse(int s , struct student *temp1)
+bool traverse(int s)
 {  
+  struct student *temp1;
     temp1 = class;
     while(temp1!= NULL)
     {
@@ -89,6 +94,11 @@ void main()
     seat_register(newnode , "roysfs" , "cs1sfs22" , 73833743, 5 , "N");
     newnode = (struct student*) malloc(sizeof(struct student));
     seat_register(newnode , "rohabny" , "css122" , 734837343, 12 , "N");
+
+    traverse(1);
+    traverse(13);
+    traverse(5);
+
     n = class ;
     while(n!= NULL)
     {

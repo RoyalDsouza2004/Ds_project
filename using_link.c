@@ -14,14 +14,14 @@ struct student
     int present ;
     int absent;
     int seat_number;
-    char *day;
+    char day[60];
     struct student *point;
     bool indecator;
 };
 
 struct student *class = NULL , *temp;
 
-void seat_register(struct student *st, char name[20], char usn[10], long long phone , int se , char d[50])
+void seat_register(struct student *st, char name[20], char usn[10], long long phone , int se , char d[1])
 {
     strcpy(st -> std_name , name);
     strcpy(st -> Usn , usn);
@@ -29,13 +29,16 @@ void seat_register(struct student *st, char name[20], char usn[10], long long ph
     st -> present = 0;
     st -> absent = 0;
     st -> seat_number = se ;
-    st -> day = (char*) malloc(sizeof(char));
     strcpy(st -> day , d);
     if(class == NULL)
+    {
         temp = class = st ;
+        st -> point = NULL;
+    }
     else 
     {
         temp -> point = st;
+        st -> point = NULL;
         temp = st ;
     }
     st ->indecator = false;
@@ -97,8 +100,7 @@ bool traverse(int s)
     {
         if(s == temp1 -> seat_number)
             return true;
-        else 
-            temp1 = temp1 -> point ;
+        temp1 = temp1 -> point ;
     }
     return false;
 }
@@ -126,11 +128,7 @@ int main()
                         case 1:
                             ++days;
                             struct student *s;
-                            while (s!=NULL)
-                            {
-                                s->day = (char*) realloc(s->day,(days+1)*sizeof(char));
-                            }
-                            
+
                             int op ;
                             printf("Options:\n1:give absentees seat number.\n2:give present student's seat number\n3:all present\nchoose your choice: ");
                             scanf("%d" , &op);
@@ -218,7 +216,7 @@ int main()
                             break;
 
                         case 2: 
-                            struct student *new ;
+                            struct student *new;
                             printf("\n");
                             for(int i=0 ; i< (rows * seats) ; i++)
                                 printf("*");
@@ -313,25 +311,38 @@ int main()
                         retry:
                         printf("choose your seat: ");
                         scanf("%d", &seat_num);
+                        
                         if(seat_num > (rows * seats))
                         {
-                            printf("you have chosen wrong seat number! try again.");
+                            printf("wrong seat number retry.");
                             goto retry;
                         }
-                        else if(traverse(seat_num) == true)
+
+                        if(traverse(seat_num) == true)
                         {
                             printf("seat is already booked try again.");
                             goto retry;
-                        } 
-                        else
-                        {
-                            newnode = (struct student*) malloc(sizeof(struct student));
-                            seat_register(newnode , name , roll_number , phone_number , seat_num , "N");
-                            nodes++;
-                        }    
+                        }
+
+                        printf("\nenter your details: \n");
+
+                        printf("enter your name : ");
+                        scanf("%s",name);
+
+                        printf("enter your USN: ");
+                        scanf("%s",roll_number); 
+
+                        printf("enter your phone number: ");
+                        scanf("%lld",&phone_number); 
+
+                        newnode = (struct student*) malloc(sizeof(struct student));
+                        seat_register(newnode , name , roll_number , phone_number , seat_num , "N");
+                        nodes++;
+                         
+                        break; 
                         
                         case 2:
-                            struct student *new ;
+                            struct student *new;
                             printf("\n");
                             for(int i=0 ; i< (rows * seats) ; i++)
                                 printf("*");
@@ -358,6 +369,12 @@ int main()
                                 printf("you have chosen wrong seat number! try again.");
                                 goto rev2;
                             }
+                            else if (traverse(seat_num) == false)
+                            {
+                                printf("student not found. try again");
+                                goto rev2;
+                            }
+                            
                             else
                             {
                                 new = class ;
