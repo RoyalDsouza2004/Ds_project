@@ -379,7 +379,6 @@ void main()
 
             exit:
             case 3:
-
                 return 0;
 
             default:
