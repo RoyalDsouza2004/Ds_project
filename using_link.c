@@ -198,6 +198,16 @@ void main()
                                     newnode = newnode -> point ;
                                 }
                             }
+                            else
+                                printf("wrong choice.");
+
+                            student *t;
+                            t = class;
+                            while(t!=NULL)
+                            {
+                                t -> indecator = false;
+                                t = t -> point;
+                            }                            
                             break;
 
                         case 2: 
