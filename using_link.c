@@ -159,17 +159,16 @@ int main()
                                 {
                                     printf("student %d: " , i+1);
                                     scanf("%d" , &ab1);
-                                    absent(ab1);      
+                                    if(traverse(ab1))
+                                        absent(ab1);      
                                 }
                                 struct student *newnode;
                                 newnode = class;
                                 while (newnode!=NULL)
                                 {
                                     if(newnode -> indecator == false)
-                                    {
                                         newnode -> present++;
-                                        newnode = newnode -> point;
-                                    }
+                                    newnode = newnode -> point;
                                 }   
                             }
                             else if(op == 2)
@@ -198,10 +197,8 @@ int main()
                                 struct student *newnode;
                                 newnode = class;
                                 while (newnode!=NULL)
-                                {
                                     newnode -> present++ ;
-                                    newnode = newnode -> point ;
-                                }
+                                newnode = newnode -> point ;
                             }
                             else
                                 printf("wrong choice.");
@@ -314,13 +311,13 @@ int main()
                         
                         if(seat_num > (rows * seats))
                         {
-                            printf("wrong seat number retry.");
+                            printf("wrong seat number retry.\n");
                             goto retry;
                         }
 
                         if(traverse(seat_num) == true)
                         {
-                            printf("seat is already booked try again.");
+                            printf("seat is already booked try again.\n");
                             goto retry;
                         }
 
@@ -366,26 +363,23 @@ int main()
 
                             if(seat_num > (rows * seats))
                             {
-                                printf("you have chosen wrong seat number! try again.");
+                                printf("you have chosen wrong seat number! try again\n.");
                                 goto rev2;
                             }
                             else if (traverse(seat_num) == false)
                             {
-                                printf("student not found. try again");
+                                printf("student not found. try again\n");
                                 goto rev2;
                             }
-                            
-                            else
+
+                            new = class ;
+                            while(new!= NULL)
                             {
-                                new = class ;
-                                while(new!= NULL)
-                                {
-                                    if(seat_num == new -> seat_number)
-                                        break;
-                                    new = new -> point;
-                                }
-                                details_of_student(new);
-                            }    
+                                if(seat_num == new -> seat_number)
+                                    break;
+                                new = new -> point;
+                            }
+                            details_of_student(new);  
                             break;
 
                         case 3:
