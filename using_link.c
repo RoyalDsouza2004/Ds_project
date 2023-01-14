@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
-int rows=0 , seats=0 , node=1 ;
+int rows=0 , seats=0 , nodes=0 ;
 float days = 0.0 ;
 
 //creating a structure for storing student details.
@@ -14,8 +14,9 @@ typedef struct student_details
     int present ;
     int absent;
     int seat_number;
-    char day[50];
+    char *day;
     student *point;
+    bool indecator;
 }student;
 
 student *class = NULL , *temp;
@@ -28,6 +29,7 @@ void seat_register(student *st, char name[20], char usn[10], long long phone , i
     st -> present = 0;
     st -> absent = 0;
     st -> seat_number = se ;
+    st -> day = (char*) malloc(sizeof(char));
     strcpy(st -> day , d);
     if(class == NULL)
         temp = class = st ;
@@ -36,6 +38,7 @@ void seat_register(student *st, char name[20], char usn[10], long long phone , i
         temp -> point = st;
         temp = st ;
     }
+    st ->indecator = false;
 }
 
 void details_of_student(student *s)
@@ -52,6 +55,40 @@ void details_of_student(student *s)
     printf("Number of days absent: %d\n\n" , s -> absent);
 }
 
+void absent(int ab)
+{
+    student *temp1;
+    temp1 = class;
+    while(temp1!=NULL)
+    {
+        if(ab == temp1 -> seat_number)
+        {
+            temp1 -> absent++;
+            strcat(temp1 -> day , "A");
+            temp1 -> indecator = true;
+            break;
+        }
+        temp1 = temp1 -> point;
+    }
+}
+
+void present(int ab)
+{
+    student *temp1;
+    temp1 = class;
+    while(temp1!=NULL)
+    {
+        if(ab == temp1 -> seat_number)
+        {
+            temp1 -> present++;
+            strcat(temp1 -> day , "P");
+            temp1 -> indecator = true;
+            break;
+        }
+        temp1 = temp1 -> point;
+    }
+}
+
 bool traverse(int s)
 {  
     student *temp1;
@@ -64,19 +101,6 @@ bool traverse(int s)
             temp1 = temp1 -> point ;
     }
     return false;
-}
-
-int node_calculate()
-{
-    int count = 0;
-    student *temp1;
-    temp1 = class;
-    while(temp1 != NULL)
-    {
-        count++;
-        temp1 = temp1 -> point ;  
-    }
-    return count;
 }
 
 void main()
@@ -100,7 +124,82 @@ void main()
                     switch(ch1)
                     {
                         case 1:
-                           
+                            ++days;
+                            int op , n=1;
+                            printf("Options:\n1:give absentees seat number.\n2:give present student's seat number\n3:all present\nchoose your choice: ");
+                            scanf("%d" , &op);
+
+                            printf("\n");
+                            for(int i=0 ; i< (rows * seats) ; i++)
+                                printf("*");
+                            printf("\n");
+                            for(int i=0 ; i<rows ; i++)
+                            {
+                                for(int j=0 ; j< seats ; j++) 
+                                {
+                                    printf("%d\t" , n++);
+                                }
+                                printf("\n\n");
+                            }
+                            printf("\n");
+                            for(int i=0 ; i< (rows * seats) ; i++)
+                                printf("*");
+
+                            if(op == 1)
+                            {
+                                int ab , ab1;
+                                printf("give number of students absent for the class: ");
+                                scanf("%d" , &ab);
+                                for(int i=0 ; i<ab ; i++)
+                                {
+                                    printf("student %d: " , i+1);
+                                    scanf("%d" , &ab1);
+                                    absent(ab1);      
+                                }
+                                student *newnode;
+                                newnode = class;
+                                while (newnode!=NULL)
+                                {
+                                    if(newnode -> indecator == false)
+                                    {
+                                        newnode -> present++;
+                                        newnode = newnode -> point;
+                                    }
+                                }   
+                            }
+                            else if(op == 2)
+                            {
+                                int pr , pr1;
+                                printf("give number of students present for the class: ");
+                                scanf("%d" , &pr);
+                                for(int i=0 ; i<pr ; i++)
+                                {
+                                    printf("student %d: " , i+1);
+                                    scanf("%d" , &pr1);
+                                    present(pr1);      
+                                }
+                                student *newnode;
+                                newnode = class;
+                                while (newnode!=NULL)
+                                {
+                                    if(newnode -> indecator == false)
+                                    {
+                                        newnode -> absent++;
+                                    }
+                                }   
+                            }
+                            else if(op == 3)
+                            {
+                                student *newnode;
+                                newnode = class;
+                                while (newnode!=NULL)
+                                {
+                                    newnode -> present++ ;
+                                    newnode = newnode -> point ;
+                                }
+                            }
+                            break;
+
                         case 2: 
                             int n = 1 ;
                             student *new ;
@@ -120,18 +219,26 @@ void main()
                             for(int i=0 ; i< (rows * seats) ; i++)
                                 printf("*");
 
+                            rev:
                             printf("\nselect student's seat:");
                             scanf("%d" , &seat_num);
 
-                            new = class ;
-                            while(new!= NULL)
+                            if(seat_num > (rows * seats))
                             {
-                                if(seat_num == new -> seat_number)
-                                    break;
-                                new = new -> point;
+                                printf("you have chosen wrong seat number! try again.");
+                                goto rev;
                             }
-
-                            details_of_student(new);
+                            else
+                            {
+                                new = class ;
+                                while(new!= NULL)
+                                {
+                                    if(seat_num == new -> seat_number)
+                                        break;
+                                    new = new -> point;
+                                }
+                                details_of_student(new);
+                            }    
                             break;
             
                         case 3:     
@@ -147,6 +254,7 @@ void main()
                             goto main;
 
                         case 6:
+                            goto exit;
 
                         default:
                             printf("Give the proper choice please!\n");
@@ -202,15 +310,55 @@ void main()
                         {
                             newnode = (student*) malloc(sizeof(student));
                             seat_register(newnode , name , roll_number , phone_number , seat_num , "N");
+                            nodes++;
                         }    
                         
                         case 2:
+                            int n = 1 ;
+                            student *new ;
+                            printf("\n");
+                            for(int i=0 ; i< (rows * seats) ; i++)
+                                printf("*");
+                            printf("\n");
+                            for(int i=0 ; i<rows ; i++)
+                            {
+                                for(int j=0 ; j< seats ; j++) 
+                                {
+                                    printf("%d\t" , n++);
+                                }
+                                printf("\n\n");
+                            }
+                            printf("\n");
+                            for(int i=0 ; i< (rows * seats) ; i++)
+                                printf("*");
+
+                            rev:
+                            printf("\nselect your seat number:");
+                            scanf("%d" , &seat_num);
+
+                            if(seat_num > (rows * seats))
+                            {
+                                printf("you have chosen wrong seat number! try again.");
+                                goto rev;
+                            }
+                            else
+                            {
+                                new = class ;
+                                while(new!= NULL)
+                                {
+                                    if(seat_num == new -> seat_number)
+                                        break;
+                                    new = new -> point;
+                                }
+                                details_of_student(new);
+                            }    
+                            break;
 
                         case 3:
                             goto main;
 
                         case 4:
-                        
+                            goto exit ;
 
                         default:
                             printf("Give correct choice. :)\n");
@@ -219,8 +367,9 @@ void main()
                 }
                 break;
 
+            exit:
             case 3:
-    
+
                 return 0;
 
             default:
