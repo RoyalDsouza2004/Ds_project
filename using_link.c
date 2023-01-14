@@ -125,6 +125,12 @@ void main()
                     {
                         case 1:
                             ++days;
+                            student *s;
+                            while (s!=NULL)
+                            {
+                                s->day = (char*) realloc(s->day,(days+1)*sizeof(char));
+                            }
+                            
                             int op , n=1;
                             printf("Options:\n1:give absentees seat number.\n2:give present student's seat number\n3:all present\nchoose your choice: ");
                             scanf("%d" , &op);
@@ -258,7 +264,7 @@ void main()
                             scanf("%d" , &seats);
                             break;
                            
-                        case 4:
+                        // case 4:
                     
                         case 5:
                             goto main;
