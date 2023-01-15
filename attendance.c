@@ -177,7 +177,7 @@ void display_std_details(student *s)
     if(days == 0)
         printf("percentage: 0 ( because no class is taken)\n");
     else
-        printf("Percentage: %g\n" , ((s -> present) / days) * 100 );
+        printf("Percentage: %g%c\n" , ((s -> present) / days) * 100 , '%');
 
     printf("Number of days absent: %d\n\n" , s -> absent);
 
@@ -194,20 +194,21 @@ void seat_register(student *st, char name[20], char usn[10], long long phone )
 
 void all_std_details()
 {
-    printf("all student details:\n");
-    printf("seat number name                  usn        ");
+    printf("all student details:\nseat number name                 usn        ");
     for(int i = 1 ; i <= days ; i++)
         printf("day%d ", i);
+    printf("days present(%c)\n" , '%');
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
         if(class[i].book_seat == true)
         {
-            printf("%12d %-20s %-10s " , i+1 , class[i].std_name , class[i].Usn);
-            for(int j = 1 ; j< days ; j++)
+            printf("%-11d %-20s %-10s " , i+1 , class[i].std_name , class[i].Usn);
+            for(int j = 1 ; j<= days ; j++)
             {
-                printf("%5c " , class[i].day[j]);
-            }  
+                printf("%4c " , class[i].day[j]);
+            }
+            printf("%-15g\n" , ((class[i].present) / days) * 100);  
         } 
     }   
 }
