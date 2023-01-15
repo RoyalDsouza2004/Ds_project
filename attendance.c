@@ -24,7 +24,6 @@ typedef struct student_details
     long long phone;
     int present ;
     int absent;
-    int seat_number;
     bool book_seat ;
     char day[60];
 }student;
@@ -42,7 +41,7 @@ void store_to_txtfile(int row , int column , FILE *fl)
 
     for(int i=0 ; i<(row * column) ; i++)
     { 
-        fprintf(fl , "%s,%s,%lld,%d,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].seat_number , class[i].day , class[i].book_seat);
+        fprintf(fl , "%s,%s,%lld,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].day , class[i].book_seat);
     }
 
     fclose(fl);
@@ -70,15 +69,15 @@ void get_from_txtfile()
     int records = 0 , read = 0;
     do
     {
-        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , &class[records].seat_number , class[records].day , &bol );
+        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , class[records].day , &bol );
         if(bol == 0)
             class[records].book_seat = false ;
         else 
             class[records].book_seat = true ;
-        if(read == 8)
+        if(read == 7)
             records++;
 
-        if(read != 8 && !feof(data))
+        if(read != 7 && !feof(data))
         {
             printf("not success.\n");
             exit(1);
@@ -104,7 +103,6 @@ void create(int rows , int column)
         class[i].phone = 0;
         class[i].present = 0;
         class[i].absent = 0;
-        class[i].seat_number = n++;
         class[i].book_seat = false ;
         strcpy(class[i].day , "D");
     }
@@ -125,11 +123,12 @@ void attendance(student *s)
     {
         for(int j=0 ; j< seats ; j++) 
         {
-            printf("%d\t", s[i*seats + j].seat_number);
+            printf("%d\t", n++);
         }
         printf("\n\n");
     }
     printf("**************************************************************\n");
+    n = 1;
 
     printf("Enter the absentees seat numbers in order: (i.e increasing order like 1 2 3 etc...)");
     for(int i=0 ; i<ab ; i++)
@@ -193,6 +192,11 @@ void seat_register(student *st, char name[20], char usn[10], long long phone )
     st -> book_seat = true; 
 }
 
+void all_std_details()
+{
+
+}
+
 int main()
 {
     get_from_txtfile();
@@ -227,11 +231,12 @@ int main()
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t", n++);
                                 }
                                 printf("\n\n");
                             }
                             printf("**************************************************************\n");
+                            n = 1;
                             printf("select student's seat number: "); 
                             scanf("%d" , &class_seat);
 
@@ -285,11 +290,12 @@ int main()
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t", n++);
                                 }
                                 printf("\n\n");
                             }
                             printf("**************************************************************\n");
+                            n = 1;
                             
                             reg:
                             printf("Choose your seat: ");
@@ -322,11 +328,12 @@ int main()
                             {
                                 for(int j=0 ; j< seats ; j++) 
                                 {
-                                    printf("%d\t", class[i*seats + j].seat_number);
+                                    printf("%d\t", n++);
                                 }
                                 printf("\n\n");
                             }
                             printf("**************************************************************\n");
+                            n = 1;
                             printf("select your seat number: ");
                             scanf("%d" , &class_seat);
 
