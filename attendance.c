@@ -194,8 +194,22 @@ void seat_register(student *st, char name[20], char usn[10], long long phone )
 
 void all_std_details()
 {
-    printf("all student details:");
-    
+    printf("all student details:\n");
+    printf("seat number name                  usn        ");
+    for(int i = 1 ; i <= days ; i++)
+        printf("day%d ", i);
+
+    for(int i = 0 ; i< (rows * seats) ; i++)
+    {
+        if(class[i].book_seat == true)
+        {
+            printf("%12d %-20s %-10s " , i+1 , class[i].std_name , class[i].Usn);
+            for(int j = 1 ; j< days ; j++)
+            {
+                printf("%5c " , class[i].day[j]);
+            }  
+        } 
+    }   
 }
 
 int main()
@@ -226,22 +240,33 @@ int main()
                             attendance(class); // teacher can take the attendance from here.
                             break;
 
-                        case 2: // teacher can check the individual student information.
-                            printf("\n*********************************************************\n");
-                            for(int i=0 ; i<rows ; i++)
+                        case 2: // teacher can check student information.
+                            int op;
+                            printf("options:\n1:for checking the individual student details.\n2:all student details.\nchoose your choice: ");
+                            scanf("%d" , &op);
+                            if(op == 1)
                             {
-                                for(int j=0 ; j< seats ; j++) 
+                                printf("\n*********************************************************\n");
+                                for(int i=0 ; i<rows ; i++)
                                 {
-                                    printf("%d\t", n++);
+                                    for(int j=0 ; j< seats ; j++) 
+                                    {
+                                        printf("%d\t", n++);
+                                    }
+                                    printf("\n\n");
                                 }
-                                printf("\n\n");
-                            }
-                            printf("**************************************************************\n");
-                            n = 1;
-                            printf("select student's seat number: "); 
-                            scanf("%d" , &class_seat);
+                                printf("**************************************************************\n");
+                                n = 1;
+                                printf("select student's seat number: "); 
+                                scanf("%d" , &class_seat);
 
-                            display_std_details(class + class_seat - 1);
+                                display_std_details(class + class_seat - 1);
+                            }
+                            else if(op == 2)
+                                all_std_details();
+                            else 
+                                printf("wrong choice.");
+                           
                             break;
 
                         case 3: // this should be the first task to be done becuse if class is not created then student cant enter his details.
