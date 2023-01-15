@@ -194,21 +194,21 @@ void seat_register(student *st, char name[20], char usn[10], long long phone )
 
 void all_std_details()
 {
-    printf("all student details:\nseat number name                 usn        ");
+    printf("all student details:\nseat number  name                  usn         ");
     for(int i = 1 ; i <= days ; i++)
         printf("day%d ", i);
-    printf("days present(%c)\n" , '%');
+    printf("  present(%c)\n" , '%');
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
         if(class[i].book_seat == true)
         {
-            printf("%-11d %-20s %-10s " , i+1 , class[i].std_name , class[i].Usn);
+            printf("%-11d  %-20s  %-10s  " , i+1 , class[i].std_name , class[i].Usn);
             for(int j = 1 ; j<= days ; j++)
             {
                 printf("%4c " , class[i].day[j]);
             }
-            printf("%-15g\n" , ((class[i].present) / days) * 100);  
+            printf("  %10g\n" , ((class[i].present) / days) * 100);  
         } 
     }   
 }
