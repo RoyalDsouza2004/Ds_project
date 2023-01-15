@@ -215,7 +215,7 @@ int main()
                         case 2: 
                             struct student *new;
                             printf("\n");
-                            for(int i=0 ; i< (rows * seats) ; i++)
+                            for(int i=0 ; i< (rows * 3) ; i++)
                                 printf("*");
                             printf("\n");
                             for(int i=0 ; i<rows ; i++)
@@ -227,7 +227,7 @@ int main()
                                 printf("\n\n");
                             }
                             printf("\n");
-                            for(int i=0 ; i< (rows * seats) ; i++)
+                            for(int i=0 ; i< (rows * 3) ; i++)
                                 printf("*");
                             n = 1;
 
