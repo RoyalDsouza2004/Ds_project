@@ -194,7 +194,8 @@ void seat_register(student *st, char name[20], char usn[10], long long phone )
 
 void all_std_details()
 {
-
+    printf("all student details:");
+    
 }
 
 int main()
