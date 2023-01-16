@@ -39,7 +39,7 @@ int store_to_txtfile()
         printf("error while exiting the program your data maybe lost.:( ");
         return 1;
     }
-    fprintf(att , "%d,%d,%d\n" , rows , seats , days );
+    fprintf(att , "%d,%d,%g\n" , rows , seats , days );
     
     fclose(att);
 
@@ -64,7 +64,7 @@ void get_from_txtfile()
     if(data == NULL || !data)
     return;
 
-    fscanf(data , "%d,%d,%d\n" , &rows , &seats , &days);
+    fscanf(data , "%d,%d,%g\n" , &rows , &seats , &days);
 
     fclose(data);
 
@@ -147,18 +147,26 @@ void attendance(student *s)
 
     while(in <=(rows*seats))
     {
-        if(in == seat_num[j])
+        if(s[in].book_seat == false)
         {
-            s[in-1].absent++; //this line will make student absent 
-            strcat(s[in-1].day , "A");
-            j++;
+            s[in].absent++;
+            in++;
         }
-        else 
+        else
         {
-            s[in-1].present++; //this line will make student present
-            strcat(s[in-1].day , "P");
-        }  
-        in++;  
+            if(in == seat_num[j])
+            {
+                s[in-1].absent++; //this line will make student absent 
+                strcat(s[in-1].day , "A");
+                j++;
+            }
+            else 
+            {
+                s[in-1].present++; //this line will make student present
+                strcat(s[in-1].day , "P");
+            }  
+            in++;
+        }   
     }
 }
 
