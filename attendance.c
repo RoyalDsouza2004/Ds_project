@@ -299,6 +299,7 @@ int main()
                             fclose(ptr);
                             ptr = fopen("class.txt" , "w");
                             fclose(ptr);
+                            days = 0;
                             break;
                             
                         case 5:
