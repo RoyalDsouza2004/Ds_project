@@ -41,10 +41,6 @@ int store_to_txtfile()
     }
 
     fprintf(att , "%d,%d,%g\n" , rows , seats , days );
-    
-    fclose(att);
-
-    att = fopen("student data.txt" , "w");
 
     for(int i=0 ; i<(rows * seats) ; i++)
     { 
@@ -67,11 +63,7 @@ void get_from_txtfile()
 
     fscanf(data , "%d,%d,%g\n" , &rows , &seats , &days);
 
-    fclose(data);
-
     class = (student*) malloc(rows * seats * sizeof(student));
-
-    data = fopen("student data.txt" , "r");
 
     int bol ;
     int records = 0 , read = 0;
@@ -301,8 +293,6 @@ int main()
                             if(new == 1)
                             {
                                 FILE *ptr;
-                                ptr = fopen("student data.txt" , "w");
-                                fclose(ptr);
                                 ptr = fopen("class.txt" , "w");
                                 fclose(ptr);
                                 days = 0 , rows = 0 , seats = 0;
@@ -320,6 +310,8 @@ int main()
                                     class[i].book_seat = false ;
                                     strcpy(class[i].day , "D");
                                 }
+                                days = 0;
+                                store_to_txtfile();
                             }
                             else
                                 printf("wrong choice.");
