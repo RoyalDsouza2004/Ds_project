@@ -20,7 +20,7 @@ float days = 0.0 ;
 typedef struct student_details
 {
     char std_name[20];
-    char Usn[10];
+    char Usn[11];
     long long phone;
     int present ;
     int absent;
@@ -30,21 +30,28 @@ typedef struct student_details
 
 student *class;
 
-void store_to_txtfile(int row , int column , FILE *fl)
+int store_to_txtfile()
 {
-
-    fprintf(fl , "%d,%d,%g\n" , rows , seats , days );
+    FILE *att;
+    att = fopen("class.txt" , "w");
+    if(!att)
+    {
+        printf("error while exiting the program your data maybe lost.:( ");
+        return 1;
+    }
+    fprintf(att , "%d,%d,%d\n" , rows , seats , days );
     
-    fclose(fl);
+    fclose(att);
 
-    fl = fopen("student data.txt" , "w");
+    att = fopen("student data.txt" , "w");
 
-    for(int i=0 ; i<(row * column) ; i++)
+    for(int i=0 ; i<(rows * seats) ; i++)
     { 
-        fprintf(fl , "%s,%s,%lld,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].day , class[i].book_seat);
+        fprintf(att , "%s,%s,%lld,%d,%d,%s,%d\n" , class[i].std_name ,class[i].Usn , class[i].phone , class[i].present , class[i].absent , class[i].day , class[i].book_seat);
     }
 
-    fclose(fl);
+    fclose(att);
+    return 0;
 }
 
 void get_from_txtfile()
@@ -57,7 +64,7 @@ void get_from_txtfile()
     if(data == NULL || !data)
     return;
 
-    fscanf(data , "%d,%d,%g\n" , &rows , &seats , &days);
+    fscanf(data , "%d,%d,%d\n" , &rows , &seats , &days);
 
     fclose(data);
 
@@ -69,7 +76,7 @@ void get_from_txtfile()
     int records = 0 , read = 0;
     do
     {
-        read = fscanf(data , "%19[^,],%9[^,],%lld,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , class[records].day , &bol );
+        read = fscanf(data , "%19[^,],%10[^,],%lld,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , class[records].day , &bol );
         if(bol == 0)
             class[records].book_seat = false ;
         else 
@@ -130,33 +137,28 @@ void attendance(student *s)
     printf("**************************************************************\n");
     n = 1;
 
-    printf("Enter the absentees seat numbers in order: (i.e increasing order like 1 2 3 etc...)");
+    printf("Enter the absentees seat numbers in order: (i.e increasing order like 1 2 3 etc...)\n");
     for(int i=0 ; i<ab ; i++)
     {
-        printf("\nStudent %d: " , i + 1);
+        printf("Student %d: " , i + 1);
         scanf("%d" , &seat_num[i]);
     }
     int j = 0 , in = 0;
 
     while(in <=(rows*seats))
     {
-        if(class[in-1].book_seat == false)
-            in++;
-        else
+        if(in == seat_num[j])
         {
-            if(in == seat_num[j])
-            {
-                s[in-1].absent++; //this line will make student absent 
-                strcat(s[in-1].day , "A");
-                j++;
-            }
-            else 
-            {
-                s[in-1].present++; //this line will make student present
-                strcat(s[in-1].day , "P");
-            }  
-            in++;  
+            s[in-1].absent++; //this line will make student absent 
+            strcat(s[in-1].day , "A");
+            j++;
         }
+        else 
+        {
+            s[in-1].present++; //this line will make student present
+            strcat(s[in-1].day , "P");
+        }  
+        in++;  
     }
 }
 
@@ -177,7 +179,7 @@ void display_std_details(student *s)
     if(days == 0)
         printf("percentage: 0 ( because no class is taken)\n");
     else
-        printf("Percentage: %g%c\n" , ((s -> present) / days) * 100 , '%');
+        printf("Percentage: %.2f%c\n" , ((s -> present) / days) * 100 , '%');
 
     printf("Number of days absent: %d\n\n" , s -> absent);
 
@@ -197,7 +199,7 @@ void all_std_details()
     printf("all student details:\nseat number  name                  usn         ");
     for(int i = 1 ; i <= days ; i++)
         printf("day%d ", i);
-    printf("  present(%c)\n" , '%');
+    printf("  present  absent  present(%c)\n" , '%');
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
@@ -208,7 +210,7 @@ void all_std_details()
             {
                 printf("%4c " , class[i].day[j]);
             }
-            printf("  %10g\n" , ((class[i].present) / days) * 100);  
+            printf("  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , ((class[i].present) / days) * 100);  
         } 
     }   
 }
@@ -239,6 +241,7 @@ int main()
                     {
                         case 1:
                             attendance(class); // teacher can take the attendance from here.
+                            store_to_txtfile();
                             break;
 
                         case 2: // teacher can check student information.
@@ -278,6 +281,7 @@ int main()
                             scanf("%d" , &seats);
 
                             create(rows , seats);
+                            store_to_txtfile();
                             break;
 
                         case 4:
@@ -347,6 +351,7 @@ int main()
                                 printf("seat is already booked try again.\n");
                                 goto reg;
                             }
+                            store_to_txtfile();
                             break;
 
                         case 2: // student can check his details.
@@ -382,14 +387,7 @@ int main()
 
             exit:
             case 3:
-                FILE *att;
-                att = fopen("class.txt" , "w");
-                if(!att)
-                {
-                    printf("error while exiting the program your data maybe lost.:( ");
-                    return 1;
-                }
-                store_to_txtfile(rows , seats , att);
+                store_to_txtfile();
                 printf("program is succesfully exited.....");
                 return 0;
 
