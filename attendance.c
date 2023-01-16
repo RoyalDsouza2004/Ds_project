@@ -39,6 +39,7 @@ int store_to_txtfile()
         printf("error while exiting the program your data maybe lost.:( ");
         return 1;
     }
+
     fprintf(att , "%d,%d,%g\n" , rows , seats , days );
     
     fclose(att);
@@ -118,7 +119,7 @@ void create(int rows , int column)
 // taking the attendance.
 void attendance(student *s)
 {
-    ++days;
+    days++;
     int ab ;
     printf("Enter the number of students absent for the class: ");
     scanf("%d" , &ab);
