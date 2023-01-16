@@ -237,16 +237,16 @@ void excel_converter()
 {
     FILE *ptr;
 
-    ptr = fopen("std_info.xlsx" , "w");
+    ptr = fopen("std_info.txt" , "w");
 
-    fprintf(ptr , "seat number  name                  usn         phone number  ");
+    fprintf(ptr , "Seat Number  Name                  USN         Phone Number  ");
     for(int i = 1 ; i <= days ; i++)
         fprintf(ptr ,"day%d ", i);
-    fprintf(ptr ,"  present  absent  present(%c)\n" , '%');
+    fprintf(ptr ,"  Present  Absent  Present(%c)\n\n" , '%');
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
-        fprintf(ptr , "%-11d  %-20s  %-10s  %-12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
+        fprintf(ptr , "%-11d  %-20s  %-10s  %12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
         for(int j = 1 ; j<= days ; j++)
         {
             fprintf(ptr , "%4c " , class[i].day[j]);
