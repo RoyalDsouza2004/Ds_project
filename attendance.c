@@ -41,10 +41,6 @@ int store_to_txtfile()
     }
 
     fprintf(att , "%d,%d,%g\n" , rows , seats , days );
-    
-    fclose(att);
-
-    att = fopen("student data.txt" , "w");
 
     for(int i=0 ; i<(rows * seats) ; i++)
     { 
@@ -67,11 +63,7 @@ void get_from_txtfile()
 
     fscanf(data , "%d,%d,%g\n" , &rows , &seats , &days);
 
-    fclose(data);
-
     class = (student*) malloc(rows * seats * sizeof(student));
-
-    data = fopen("student data.txt" , "r");
 
     int bol ;
     int records = 0 , read = 0;
@@ -143,6 +135,12 @@ void attendance(student *s)
     {
         printf("Student %d: " , i + 1);
         scanf("%d" , &seat_num[i]);
+        if(s[seat_num[i]-1].book_seat == false && (seat_num[i] > (rows * seats)))
+        {
+            printf("there is no student who has registered this seat.\n" );
+            seat_num[i] = 0 ;
+            i--;
+        }
     }
     int j = 0 , in = 1;
 
@@ -220,7 +218,13 @@ void all_std_details()
             {
                 printf("%4c " , class[i].day[j]);
             }
-            printf("  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , ((class[i].present) / days) * 100);  
+            float percent;
+            if(days == 0)
+                percent = 0;
+            else
+                percent = ((class[i].present) / days) * 100;
+
+            printf("  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
         } 
     }   
 }
@@ -271,10 +275,17 @@ int main()
                                 }
                                 printf("**************************************************************\n");
                                 n = 1;
+                                reg1:
                                 printf("select student's seat number: "); 
                                 scanf("%d" , &class_seat);
 
-                                display_std_details(class + class_seat - 1);
+                                if(class_seat > (rows * seats))
+                                {
+                                    printf("you have chosen wrong seat number! try again.....\n");
+                                    goto reg1;
+                                }
+                                else
+                                    display_std_details(class + class_seat - 1);
                             }
                             else if(op == 2)
                                 all_std_details();
@@ -301,8 +312,6 @@ int main()
                             if(new == 1)
                             {
                                 FILE *ptr;
-                                ptr = fopen("student data.txt" , "w");
-                                fclose(ptr);
                                 ptr = fopen("class.txt" , "w");
                                 fclose(ptr);
                                 days = 0 , rows = 0 , seats = 0;
@@ -320,6 +329,8 @@ int main()
                                     class[i].book_seat = false ;
                                     strcpy(class[i].day , "D");
                                 }
+                                days = 0;
+                                store_to_txtfile();
                             }
                             else
                                 printf("wrong choice.");
@@ -368,6 +379,12 @@ int main()
                             printf("Choose your seat: ");
                             scanf("%d" , &class_seat);
 
+                            if(class_seat > (rows * seats))
+                            {
+                                printf("you have chosen wrong seat number! try again.....\n");
+                                goto reg;
+                            }
+
                             if(class[class_seat - 1].book_seat == false)
                             {
                                 printf("\nenter your details: \n");
@@ -402,10 +419,17 @@ int main()
                             }
                             printf("**************************************************************\n");
                             n = 1;
+                            reg3:
                             printf("select your seat number: ");
                             scanf("%d" , &class_seat);
 
-                            display_std_details(class + class_seat - 1);
+                            if(class_seat > (rows * seats))
+                            {
+                                printf("you have chosen wrong seat number! try again.....\n");
+                                goto reg3;
+                            }
+                            else
+                                display_std_details(class + class_seat - 1);
                             break;
                         
                         case 3:
