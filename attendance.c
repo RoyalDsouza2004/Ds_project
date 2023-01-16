@@ -144,13 +144,13 @@ void attendance(student *s)
         printf("Student %d: " , i + 1);
         scanf("%d" , &seat_num[i]);
     }
-    int j = 0 , in = 0;
+    int j = 0 , in = 1;
 
     while(in <=(rows*seats))
     {
-        if(s[in].book_seat == false)
+        if(s[in-1].book_seat == false)
         {
-            s[in].absent++;
+            s[in-1].absent++;
             in++;
         }
         else
@@ -243,7 +243,7 @@ int main()
                 int ch1;
                 while(1)
                 {
-                    printf("1:take the attendance.\n2:check student details.\n3:create the class.\n4:erase the content(delete everything).\n5:back to main menu.\n6:exit the program.\nenter the choice: "); //if choice was 1 then this menu will be displayed.
+                    printf("1:take the attendance.\n2:check student details.\n3:create the class.\n4:change the contents.\n5:back to main menu.\n6:exit the program.\nenter the choice: "); //if choice was 1 then this menu will be displayed.
                     scanf("%d", &ch1);
 
                     switch(ch1)
@@ -294,12 +294,35 @@ int main()
                             break;
 
                         case 4:
-                            FILE *ptr;
-                            ptr = fopen("student data.txt" , "w");
-                            fclose(ptr);
-                            ptr = fopen("class.txt" , "w");
-                            fclose(ptr);
-                            days = 0;
+                            int new;
+                            printf("\noptions:\n1:erase the content(delete everything).\n2:reset the data.\nenter the choice: ");
+                            scanf("%d" , &new);
+                            if(new == 1)
+                            {
+                                FILE *ptr;
+                                ptr = fopen("student data.txt" , "w");
+                                fclose(ptr);
+                                ptr = fopen("class.txt" , "w");
+                                fclose(ptr);
+                                days = 0 , rows = 0 , seats = 0;
+                                free(class);
+                            }
+                            else if(new == 2) 
+                            {
+                                for(int i=0 ; i<(rows* seats) ; i++)
+                                {
+                                    strcpy(class[i].std_name , "no name");
+                                    strcpy(class[i].Usn , "mite");
+                                    class[i].phone = 0;
+                                    class[i].present = 0;
+                                    class[i].absent = 0;
+                                    class[i].book_seat = false ;
+                                    strcpy(class[i].day , "D");
+                                }
+                            }
+                            else
+                                printf("wrong choice.");
+                            
                             break;
                             
                         case 5:
@@ -318,7 +341,7 @@ int main()
                 int ch2;
                 while(1)
                 {
-                    printf("1:register the seat.\n2:check your details.\n3:Back to main menu.\n4:exit the program.\nEnter the choice: "); //if choice was 2 then this menu will be displayed.
+                    printf("1:register the seat.\n2:check your details.\n3:Un-register your seat.\n4:Back to main menu.\n5:exit the program.\nEnter the choice: "); //if choice was 2 then this menu will be displayed.
                     scanf("%d" , &ch2);
 
                     switch (ch2)
@@ -381,11 +404,38 @@ int main()
 
                             display_std_details(class + class_seat - 1);
                             break;
+                        
+                        case 5:
+                            int st_number;
+                            printf("\n*********************************************************\n");
+                            for(int i=0 ; i<rows ; i++)
+                            {
+                                for(int j=0 ; j< seats ; j++) 
+                                {
+                                    printf("%d\t", n++);
+                                }
+                                printf("\n\n");
+                            }
+                            printf("**************************************************************\n");
 
-                        case 3:
-                            goto main_menu; // this will take back to main menu.
+                            printf("choose your seat: ");
+                            scanf("%d" , &st_number);
+
+                            strcpy(class[st_number-1].std_name , "no name");
+                            strcpy(class[st_number-1].Usn , "mite");
+                            class[st_number-1].phone = 0;
+                            class[st_number-1].present = 0;
+                            class[st_number-1].absent = 0;
+                            class[st_number-1].book_seat = false ;
+                            strcpy(class[st_number-1].day , "D");
+                            printf("succesfully deleted your information.");
+
+                            break;
 
                         case 4:
+                            goto main_menu; // this will take back to main menu.
+
+                        case 5:
                             goto exit; // terminates the program.
 
                         default:
