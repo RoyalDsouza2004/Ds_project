@@ -135,7 +135,7 @@ void attendance(student *s)
     {
         printf("Student %d: " , i + 1);
         scanf("%d" , &seat_num[i]);
-        if(s[seat_num[i]-1].book_seat == false && (seat_num[i] > (rows * seats)))
+        if(s[seat_num[i]-1].book_seat == false || (seat_num[i] > (rows * seats)))
         {
             printf("there is no student who has registered this seat.\n" );
             seat_num[i] = 0 ;
