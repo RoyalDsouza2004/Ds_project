@@ -140,37 +140,28 @@ void attendance(student *s)
             printf("wrong seat number.\n");
             seat_num[i--] = 0 ;
         }
-        else if(s[seat_num[i]-1].book_seat == false)
-        {
-            printf("there is no student who has registered this seat.\n" );
-            seat_num[i--] = 0 ;
-        }
     }
     int j = 0 , in = 1;
 
     while(in <=(rows*seats))
     {
-        if(s[in-1].book_seat == false)
+        if(in == seat_num[j])
+        {
+            s[in-1].absent++; //this line will make student absent 
+            strcat(s[in-1].day , "A");
+            j++;
+        }
+        else if(s[in-1].book_seat == false)
         {
             s[in-1].absent++;
             strcat(s[in-1].day , "A");
-            in++;
         }
-        else
+        else 
         {
-            if(in == seat_num[j])
-            {
-                s[in-1].absent++; //this line will make student absent 
-                strcat(s[in-1].day , "A");
-                j++;
-            }
-            else 
-            {
-                s[in-1].present++; //this line will make student present
-                strcat(s[in-1].day , "P");
-            }  
-            in++;
-        }   
+            s[in-1].present++; //this line will make student present
+            strcat(s[in-1].day , "P");
+        }  
+        in++;  
     }
 }
 
