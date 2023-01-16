@@ -233,6 +233,34 @@ void all_std_details()
     }   
 }
 
+void excel_converter()
+{
+    FILE *ptr;
+
+    ptr = fopen("std_info.xlsx" , "w");
+
+    fprintf(ptr , "seat number  name                  usn         phone number  ");
+    for(int i = 1 ; i <= days ; i++)
+        fprintf(ptr ,"day%d ", i);
+    fprintf(ptr ,"  present  absent  present(%c)\n" , '%');
+
+    for(int i = 0 ; i< (rows * seats) ; i++)
+    {
+        fprintf(ptr , "%-11d  %-20s  %-10s  %-12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
+        for(int j = 1 ; j<= days ; j++)
+        {
+            fprintf(ptr , "%4c " , class[i].day[j]);
+        }
+        float percent;
+        if(days == 0)
+            percent = 0;
+        else
+            percent = ((class[i].present) / days) * 100;
+
+        fprintf(ptr , "  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
+    }  
+} 
+
 int main()
 {
     get_from_txtfile();
@@ -483,6 +511,7 @@ int main()
             exit:
             case 3:
                 store_to_txtfile();
+                excel_converter();
                 printf("program is succesfully exited.....");
                 return 0;
 
