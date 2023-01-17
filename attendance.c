@@ -199,10 +199,18 @@ void seat_register(student *st , char name[30] , char u[11] , long long ph)
 
 void all_std_details()
 {
-    printf("all student details:\nseat number  name                            usn         ");
+    printf("all student details:\n");
+    for(int i=0 ; i< 86 + (6*days) ; i++)
+        printf("*");
+    printf("\nseat number  name                            usn         ");
     for(int i = 1 ; i <= days ; i++)
-        printf("day%2d ", i);
+        printf("day%d ", i);
     printf("  present  absent  present(%c)\n" , '%');
+
+    for(int i=0 ; i< 86 + (6*days) ; i++)
+        printf("*");
+
+    printf("\n");
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
@@ -211,7 +219,10 @@ void all_std_details()
             printf("%-11d  %-30s  %-10s  " , i+1 , class[i].std_name , class[i].Usn);
             for(int j = 1 ; j<= days ; j++)
             {
-                printf("%4c " , class[i].day[j]);
+                if(j<10)
+                    printf("%4c " , class[i].day[j]);
+                else
+                    printf("%5c " , class[i].day[j]);
             }
             float percent;
             if(days == 0)
@@ -229,13 +240,13 @@ void excel_converter()
     FILE *ptr;
 
     ptr = fopen("std_info.txt" , "w");
-    for(int i=0 ; i< 99 + (5*days) ; i++)
+    for(int i=0 ; i< 99 + (6*days) ; i++)
         fprintf(ptr , "*");
 
     fprintf(ptr , "\nSeat Number  Name                            USN         Phone Number  ");
     for(int i = 1 ; i <= days ; i++)
-        fprintf(ptr ,"day%2d ", i);
-    fprintf(ptr ," Present  Absent  Present(%c)\n" , '%');
+        fprintf(ptr ,"day%d ", i);
+    fprintf(ptr ,"  Present  Absent  Present(%c)\n" , '%');
 
     for(int i=0 ; i< 99 + (6*days) ; i++)
         fprintf(ptr , "*");
@@ -245,14 +256,20 @@ void excel_converter()
     {
         fprintf(ptr , "%-11d  %-30s  %-10s  %12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
         for(int j = 1 ; j<= days ; j++)
+        {
+            if(j<10)
                 fprintf(ptr , "%4c " , class[i].day[j]);
+            else
+                fprintf(ptr , "%5c " , class[i].day[j]);
+        }
+                
         float percent;
         if(days == 0)
             percent = 0;
         else
             percent = ((class[i].present) / days) * 100;
 
-        fprintf(ptr , " %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
+        fprintf(ptr , "  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
     }  
 } 
 
