@@ -1,65 +1,59 @@
-Seat Number  Name                  USN         Phone Number  day1 day2 day3 day4 day5 day6 day7 day8 day9 day10 day11   Present  Absent  Present(%)
-
-1            roy                   cs122             232323     P    A    A    P    P    P    A    A    A    A    A         4       7       36.36
-2            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-3            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-4            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-5            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-6            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-7            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-8            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-9            no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-10           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-11           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-12           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-13           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-14           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-15           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-16           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-17           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-18           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-19           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-20           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-21           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-22           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-23           rohan                 cs121           89328283     A    P    P    P    P    P    P    A    A    P    A         7       4       63.64
-24           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-25           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-26           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-27           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-28           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-29           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-30           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-31           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-32           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-33           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-34           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-35           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-36           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-37           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-38           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-39           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-40           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-41           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-42           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-43           poornesh              cs101             823482     P    P    P    A    P    P    P    P    A    P    P         9       2       81.82
-44           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-45           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-46           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-47           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-48           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-49           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-50           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-51           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-52           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-53           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-54           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-55           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-56           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-57           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-58           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-59           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-60           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-61           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-62           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
-63           no name               mite                   0     A    A    A    A    A    A    A    A    A    A    A         0      11        0.00
+***************************************************************************************************
+Seat Number  Name                            USN         Phone Number   Present  Absent  Present(%)
+***************************************************************************************************
+1            no name                         mite                   0         0       0        0.00
+2            no name                         mite                   0         0       0        0.00
+3            no name                         mite                   0         0       0        0.00
+4            no name                         mite                   0         0       0        0.00
+5            no name                         mite                   0         0       0        0.00
+6            no name                         mite                   0         0       0        0.00
+7            no name                         mite                   0         0       0        0.00
+8            no name                         mite                   0         0       0        0.00
+9            no name                         mite                   0         0       0        0.00
+10           no name                         mite                   0         0       0        0.00
+11           no name                         mite                   0         0       0        0.00
+12           no name                         mite                   0         0       0        0.00
+13           no name                         mite                   0         0       0        0.00
+14           no name                         mite                   0         0       0        0.00
+15           no name                         mite                   0         0       0        0.00
+16           no name                         mite                   0         0       0        0.00
+17           no name                         mite                   0         0       0        0.00
+18           no name                         mite                   0         0       0        0.00
+19           no name                         mite                   0         0       0        0.00
+20           no name                         mite                   0         0       0        0.00
+21           no name                         mite                   0         0       0        0.00
+22           no name                         mite                   0         0       0        0.00
+23           no name                         mite                   0         0       0        0.00
+24           no name                         mite                   0         0       0        0.00
+25           no name                         mite                   0         0       0        0.00
+26           no name                         mite                   0         0       0        0.00
+27           no name                         mite                   0         0       0        0.00
+28           no name                         mite                   0         0       0        0.00
+29           no name                         mite                   0         0       0        0.00
+30           no name                         mite                   0         0       0        0.00
+31           no name                         mite                   0         0       0        0.00
+32           no name                         mite                   0         0       0        0.00
+33           no name                         mite                   0         0       0        0.00
+34           no name                         mite                   0         0       0        0.00
+35           no name                         mite                   0         0       0        0.00
+36           no name                         mite                   0         0       0        0.00
+37           no name                         mite                   0         0       0        0.00
+38           no name                         mite                   0         0       0        0.00
+39           no name                         mite                   0         0       0        0.00
+40           no name                         mite                   0         0       0        0.00
+41           no name                         mite                   0         0       0        0.00
+42           no name                         mite                   0         0       0        0.00
+43           no name                         mite                   0         0       0        0.00
+44           no name                         mite                   0         0       0        0.00
+45           no name                         mite                   0         0       0        0.00
+46           no name                         mite                   0         0       0        0.00
+47           no name                         mite                   0         0       0        0.00
+48           no name                         mite                   0         0       0        0.00
+49           no name                         mite                   0         0       0        0.00
+50           no name                         mite                   0         0       0        0.00
+51           no name                         mite                   0         0       0        0.00
+52           no name                         mite                   0         0       0        0.00
+53           no name                         mite                   0         0       0        0.00
+54           no name                         mite                   0         0       0        0.00
+55           no name                         mite                   0         0       0        0.00
+56           no name                         mite                   0         0       0        0.00

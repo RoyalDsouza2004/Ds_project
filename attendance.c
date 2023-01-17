@@ -19,7 +19,7 @@ float days = 0.0 ;
 //creating a structure for storing student details.
 typedef struct student_details
 {
-    char std_name[20];
+    char std_name[30];
     char Usn[11];
     long long phone;
     int present ;
@@ -69,7 +69,7 @@ void get_from_txtfile()
     int records = 0 , read = 0;
     do
     {
-        read = fscanf(data , "%19[^,],%10[^,],%lld,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , class[records].day , &bol );
+        read = fscanf(data , "%29[^,],%10[^,],%lld,%d,%d,%59[^,],%d\n", class[records].std_name , class[records].Usn , &class[records].phone , &class[records].present , &class[records].absent , class[records].day , &bol );
         if(bol == 0)
             class[records].book_seat = false ;
         else 
@@ -79,12 +79,12 @@ void get_from_txtfile()
 
         if(read != 7 && !feof(data))
         {
-            printf("not success.\n");
+            printf("not success1.\n");
             exit(1);
         }
         if(ferror(data))
         {
-            printf("not success.\n");
+            printf("not success2.\n");
             exit(1);
         }
     }while (!feof(data));
@@ -189,26 +189,26 @@ void display_std_details(student *s)
 }
 
 // giving student to choose his / her seat
-void seat_register(student *st, char name[20], char usn[10], long long phone )
+void seat_register(student *st , char name[30] , char u[11] , long long ph)
 {
     strcpy(st -> std_name , name);
-    strcpy(st -> Usn , usn);
-    st -> phone = phone ;
+    strcpy(st -> Usn , u);
+    st -> phone = ph ;
     st -> book_seat = true; 
 }
 
 void all_std_details()
 {
-    printf("all student details:\nseat number  name                  usn         ");
+    printf("all student details:\nseat number  name                            usn         ");
     for(int i = 1 ; i <= days ; i++)
-        printf("day%d ", i);
+        printf("day%2d ", i);
     printf("  present  absent  present(%c)\n" , '%');
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
         if(class[i].book_seat == true)
         {
-            printf("%-11d  %-20s  %-10s  " , i+1 , class[i].std_name , class[i].Usn);
+            printf("%-11d  %-30s  %-10s  " , i+1 , class[i].std_name , class[i].Usn);
             for(int j = 1 ; j<= days ; j++)
             {
                 printf("%4c " , class[i].day[j]);
@@ -229,26 +229,30 @@ void excel_converter()
     FILE *ptr;
 
     ptr = fopen("std_info.txt" , "w");
+    for(int i=0 ; i< 99 + (5*days) ; i++)
+        fprintf(ptr , "*");
 
-    fprintf(ptr , "Seat Number  Name                  USN         Phone Number  ");
+    fprintf(ptr , "\nSeat Number  Name                            USN         Phone Number  ");
     for(int i = 1 ; i <= days ; i++)
-        fprintf(ptr ,"day%d ", i);
-    fprintf(ptr ,"  Present  Absent  Present(%c)\n\n" , '%');
+        fprintf(ptr ,"day%2d ", i);
+    fprintf(ptr ," Present  Absent  Present(%c)\n" , '%');
+
+    for(int i=0 ; i< 99 + (6*days) ; i++)
+        fprintf(ptr , "*");
+    fprintf(ptr , "\n");
 
     for(int i = 0 ; i< (rows * seats) ; i++)
     {
-        fprintf(ptr , "%-11d  %-20s  %-10s  %12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
+        fprintf(ptr , "%-11d  %-30s  %-10s  %12lld  " , i+1 , class[i].std_name , class[i].Usn , class[i].phone);
         for(int j = 1 ; j<= days ; j++)
-        {
-            fprintf(ptr , "%4c " , class[i].day[j]);
-        }
+                fprintf(ptr , "%4c " , class[i].day[j]);
         float percent;
         if(days == 0)
             percent = 0;
         else
             percent = ((class[i].present) / days) * 100;
 
-        fprintf(ptr , "  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
+        fprintf(ptr , " %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
     }  
 } 
 
@@ -384,8 +388,6 @@ int main()
                     switch (ch2)
                     {
                         case 1: // student can register his seat from here.
-                            char name[20] ,roll_number[10];
-                            long long phone_number;
                             printf("\n**********************seats available***********************\n");
                             for(int i=0 ; i<rows ; i++)
                             {
@@ -410,6 +412,9 @@ int main()
 
                             if(class[class_seat - 1].book_seat == false)
                             {
+                                char name[30] ,roll_number[11];
+                                long long phone_number;
+                               
                                 printf("\nenter your details: \n");
 
                                 printf("enter your name : ");
@@ -419,9 +424,11 @@ int main()
                                 scanf("%s",roll_number); 
 
                                 printf("enter your phone number: ");
-                                scanf("%lld",&phone_number); 
+                                scanf("%lld",&phone_number);
+
                                 seat_register(class + class_seat -1 , name , roll_number , phone_number);
-                            }
+                            }   
+                                
                             else
                             {
                                 printf("seat is already booked try again.\n");
