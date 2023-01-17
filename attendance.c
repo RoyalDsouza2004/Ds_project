@@ -418,10 +418,10 @@ int main()
                                 printf("\nenter your details: \n");
 
                                 printf("enter your name : ");
-                                scanf("%s",name);
+                                gets(name);
 
                                 printf("enter your USN: ");
-                                scanf("%s",roll_number); 
+                                gets(roll_number); 
 
                                 printf("enter your phone number: ");
                                 scanf("%lld",&phone_number);
@@ -520,5 +520,4 @@ int main()
     }while(choice != 3);
 
     return 0;
-
 }

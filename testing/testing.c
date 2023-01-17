@@ -3,7 +3,7 @@
 
 int main() {
   char str1[20];
-  scanf("%s" , str1);
+  gets(str1);
   char str2[20];
 
   // copying str1 to str2
