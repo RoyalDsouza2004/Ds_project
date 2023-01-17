@@ -199,15 +199,21 @@ void seat_register(student *st , char name[30] , char u[11] , long long ph)
 
 void all_std_details()
 {
+    int temperory = 86 + (6*days) ;
+    if(days > 9)
+        temperory-=10 ;
+    else
+        temperory-=days ;
+
     printf("all student details:\n");
-    for(int i=0 ; i< 86 + (6*days) ; i++)
+    for(int i=0 ; i< temperory ; i++)
         printf("*");
     printf("\nseat number  name                            usn         ");
     for(int i = 1 ; i <= days ; i++)
         printf("day%d ", i);
     printf("  present  absent  present(%c)\n" , '%');
 
-    for(int i=0 ; i< 86 + (6*days) ; i++)
+    for(int i=0 ; i< temperory ; i++)
         printf("*");
 
     printf("\n");
@@ -232,15 +238,24 @@ void all_std_details()
 
             printf("  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
         } 
-    }   
+    }  
+
+    for(int i=0 ; i< temperory ; i++)
+        printf("*"); 
+    printf("\n");
 }
 
 void excel_converter()
 {
     FILE *ptr;
-
+    int temperory = 100 + (6*days) ;
+    if(days > 9)
+        temperory-=10 ;
+    else
+        temperory-=days ;
+    
     ptr = fopen("std_info.txt" , "w");
-    for(int i=0 ; i< 99 + (6*days) ; i++)
+    for(int i=0 ; i< temperory ; i++)
         fprintf(ptr , "*");
 
     fprintf(ptr , "\nSeat Number  Name                            USN         Phone Number  ");
@@ -248,7 +263,7 @@ void excel_converter()
         fprintf(ptr ,"day%d ", i);
     fprintf(ptr ,"  Present  Absent  Present(%c)\n" , '%');
 
-    for(int i=0 ; i< 99 + (6*days) ; i++)
+    for(int i=0 ; i< temperory ; i++)
         fprintf(ptr , "*");
     fprintf(ptr , "\n");
 
@@ -270,7 +285,10 @@ void excel_converter()
             percent = ((class[i].present) / days) * 100;
 
         fprintf(ptr , "  %7d  %6d  %10.2f\n" , class[i].present , class[i].absent , percent);  
-    }  
+    } 
+
+    for(int i=0 ; i< temperory ; i++)
+        fprintf(ptr , "*"); 
 } 
 
 int main()
@@ -300,6 +318,7 @@ int main()
                         case 1:
                             attendance(class); // teacher can take the attendance from here.
                             store_to_txtfile();
+                            excel_converter();
                             break;
 
                         case 2: // teacher can check student information.
@@ -347,6 +366,7 @@ int main()
 
                             create(rows , seats);
                             store_to_txtfile();
+                            excel_converter();
                             break;
 
                         case 4:
@@ -380,7 +400,7 @@ int main()
                                 printf("wrong choice.");
 
                             store_to_txtfile();
-                            
+                            excel_converter();
                             break;
                             
                         case 5:
@@ -399,7 +419,7 @@ int main()
                 int ch2;
                 while(1)
                 {
-                    printf("1:register the seat.\n2:check your details.\n3:Un-register your seat.\n4:Back to main menu.\n5:exit the program.\nEnter the choice: "); //if choice was 2 then this menu will be displayed.
+                    printf("1:register the seat.\n2:check your details.\n3:Un-register your seat.\n4:swap your seat.\n5:Back to main menu.\n6:exit the program.\nEnter the choice: "); //if choice was 2 then this menu will be displayed.
                     scanf("%d" , &ch2);
 
                     switch (ch2)
@@ -452,6 +472,7 @@ int main()
                                 goto reg;
                             }
                             store_to_txtfile();
+                            excel_converter();
                             break;
 
                         case 2: // student can check his details.
@@ -507,13 +528,44 @@ int main()
 
                             printf("succesfully deleted your information.\n");
                             store_to_txtfile();
+                            excel_converter();
+                            break;
+                        
+                        case 4:
+                            int s_n , c_s;
 
+                            printf("\n*********************************************************\n");
+                            for(int i=0 ; i<rows ; i++)
+                            {
+                                for(int j=0 ; j< seats ; j++) 
+                                {
+                                    printf("%d\t", n++);
+                                }
+                                printf("\n\n");
+                            }
+                            printf("**************************************************************\n");
+                            n = 1;
+
+                            printf("enter your seat: ");
+                            scanf("%d" , &s_n);
+
+                            printf("which seat you want to change: ");
+                            scanf("%d" , &c_s);
+
+                            class = (student*)realloc(class , (rows * seats + 1) *sizeof(student));
+                            class[rows * seats] = class[s_n-1];
+                            class[s_n-1] = class[c_s-1];
+                            class[c_s-1] = class[rows * seats];
+                            class = (student*)realloc(class , (rows * seats) *sizeof(student));
+
+                            store_to_txtfile();
+                            printf("your seat has been changed successfully....\n");
                             break;
 
-                        case 4:
+                        case 5:
                             goto main_menu; // this will take back to main menu.
 
-                        case 5:
+                        case 6:
                             goto exit; // terminates the program.
 
                         default:
